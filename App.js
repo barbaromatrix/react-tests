@@ -3,35 +3,33 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 const Stars = (props) => {
-  const numberOfStars = 1 + Math.floor(Math.random() * 9);
   return (
-    <div className='col-md-5'>
-      {
-        _.range(numberOfStars).map(i =>
-          <i key={i} className="fa fa-star"></i>
-        )
-      }
-    </div>
+  	<div className='col-md-5'>
+  	  {
+      	_.range(props.numberOfStars).map(i =>
+      		<i key={i} className="fa fa-star"></i>  
+      )}
+  	</div>
   );
 };
 
 const Button = (props) => {
-  return (
-    <div className='col-md-2'>
-      <button>=</button>
-    </div>
+	return (
+  	<div className='col-md-2'>
+  	  <button>=</button>
+  	</div>
   );
 };
 
 const Answer = (props) => {
-  return (
-    <div className='col-md-5'>
-      {
-        props.selectedNumbers.map((number, i) => 
-          <span key={i}>{number}</span>
+	return (
+  	<div className='col-md-5'>
+  	  {
+      	props.selectedNumbers.map((number, i) => 
+        	<span key={i}>{number}</span>
         )
       }
-    </div>
+  	</div>
   );
 };
 
@@ -41,53 +39,62 @@ const Number = (props) => {
     	return 'selected';
     }
   }
-
-  return (
-    <div className="card text-center">
-      <div>
-        {
-          Number.list.map((number, index) =>
-            <span key={index} className={numberClassName(number)}>{number}</span>
+	return (
+  	<div className="card text-center">
+  	  <div>
+      	{
+        	Number.list.map((number, index) => 
+          	<span onClick={() => props.selectNumbers(number)} key={index} className={numberClassName(number)}>{number}</span>
           )
         }
-      </div>
-    </div>
-  );
+  	  </div>
+  	</div>
+	);
 };
-Number.list = _.range(1, 10);
+Number.list = _.range(1,10);
 
 class Game extends React.Component {
-  constructor() {
-    super();
-
+	constructor() {
+  	super();
     this.state = {
-      selectedNumbers: []
+    	selectedNumbers: [],
+      randomNumberOfStars: 1+ Math.floor(Math.random() * 9)
     };
+    
+    this.selectNumber = this.selectNumber.bind(this);
   }
-
-  render() {
-    return (
-      <div>
-        <h3>Play nine</h3>
+  
+  selectNumber(clickedNumber) {
+  	if (this.state.selectedNumbers.indexOf(clickedNumber) < 0) {
+    	this.setState((prevState) => ({
+        selectedNumbers: prevState.selectedNumbers.concat(clickedNumber)
+      }));
+    }
+  }
+  
+	render(){
+  	return (
+    	<div>
+    	  <h3>Play nine</h3>
         <hr />
         <div className="row">
-          <Stars />
+          <Stars numberOfStars={this.state.randomNumberOfStars}/>
           <Button />
           <Answer selectedNumbers={this.state.selectedNumbers} />
         </div>
         <br />
-        <Number selectedNumbers={this.state.selectedNumbers}/>
-      </div>
+        <Number selectNumbers={this.selectNumber} selectedNumbers={this.state.selectedNumbers} />
+    	</div>
     );
   }
 }
 
 class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Game />
-      </div>
+	render(){
+  	return (
+    	<div>
+    	  <Game />
+    	</div>
     );
   }
 }
