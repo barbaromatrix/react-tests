@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 const Card = (props) => {
-	return (
-  	<div>
+  return (
+  	<div key={props.id}>
       <img width="100" src={props.avatar_url} />
       <div>{props.name}</div>
       <div>{props.company}</div>
@@ -54,11 +55,13 @@ class App extends React.Component {
     this.state = {
     	list: [
       	{
+          id: 1,
         	avatar_url: 'https://avatars0.githubusercontent.com/u/8710317?v=4',
           name: 'Matheus',
           company: 'Concrete Solutions'
         },
         {
+          id: 2,
         	avatar_url: 'https://avatars0.githubusercontent.com/u/8710319?v=4',
           name: 'Someone',
           company: 'Some place'
