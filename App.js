@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
+// Componente funcional - Stateless
 const Stars = (props) => {
   return (
   	<div className='col-md-5'>
@@ -55,7 +56,8 @@ Number.list = _.range(1,10);
 
 class Game extends React.Component {
 	constructor() {
-  	super();
+    super();
+    
     this.state = {
     	selectedNumbers: [],
       randomNumberOfStars: 1+ Math.floor(Math.random() * 9)
